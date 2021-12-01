@@ -10,7 +10,7 @@ namespace ServiceLayer.UsersService
 {
     public interface IUserService
     {
-        Task<ServiceResponse<Guid>> Register(User user, string password, string identityCard);
+        Task<ServiceResponse<Guid>> Register(User user, string password);
         Task<ServiceResponse<AuthenticateResponse>> Login(string username, string password);
         Task<bool> UserExists(string username);
     }

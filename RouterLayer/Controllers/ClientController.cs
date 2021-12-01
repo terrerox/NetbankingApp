@@ -31,6 +31,12 @@ namespace RouterLayer.Controllers
             return Ok(await _clientService.GetClientById(id));
         }
 
+        [HttpGet("identity-card/{identityCard}")]
+        public async Task<IActionResult> GetByIdentityCard(string identityCard)
+        {
+            return Ok(await _clientService.GetClientByIdentityCard(identityCard));
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddClient(AddClientDto newClient)
         {

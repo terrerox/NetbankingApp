@@ -29,7 +29,7 @@ namespace RouterLayer.Controllers
                     Username = request.Username, 
                     Email = request.Email,
                     Role = request.Role 
-                }, request.Password, request.IdentityCard);
+                }, request.Password);
             if(!response.Success) {
                 return BadRequest(response);
             }

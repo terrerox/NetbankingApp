@@ -60,7 +60,7 @@ namespace ServiceLayer.UsersService
             return response;
         }
 
-        public async Task<ServiceResponse<Guid>> Register(User user, string password, string identityCard)
+        public async Task<ServiceResponse<Guid>> Register(User user, string password)
         {
             ServiceResponse<Guid> response = new ServiceResponse<Guid>();
             if (await UserExists(user.Username))

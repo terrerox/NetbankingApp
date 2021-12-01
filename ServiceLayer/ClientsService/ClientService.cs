@@ -87,7 +87,16 @@ namespace ServiceLayer.ClientsService
             Client dbClient = 
                 await _context.Clients
                 .FirstOrDefaultAsync(c => c.IdentityCard == identityCard && c.Status == ClientStatus.Active);
-            serviceResponse.Data = _mapper.Map<GetClientDto>(dbClient);
+            if(dbClient != null)
+            {
+                serviceResponse.Data = _mapper.Map<GetClientDto>(dbClient);
+            }
+            else
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = "Client not found";
+            }
+
             return serviceResponse;
         }
 
