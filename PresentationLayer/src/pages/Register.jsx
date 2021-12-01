@@ -7,10 +7,11 @@ const Register = () => {
         username: '',
         password: '',
         email: '',
+        identityCard: ''
     });
     const register = useUserStore(state => state.register)
 
-    const { username, password, email } = registerCredentials;
+    const { username, password, email, identityCard } = registerCredentials;
     const updateState = e => {
         setRegisterCredentials({
             ...registerCredentials,
@@ -40,7 +41,13 @@ const Register = () => {
                 name="email"                
                 onChange={updateState} 
                 value={email}
-                placeholder="Ingrese la contraseña" 
+                placeholder="Ingrese el email" 
+            />
+            <input 
+                name="identityCard"                
+                onChange={updateState} 
+                value={identityCard}
+                placeholder="Ingrese la cedula" 
             />
             <button type="submit">Inicia sesión</button>
         </form>

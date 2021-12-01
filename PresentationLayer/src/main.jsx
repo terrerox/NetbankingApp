@@ -11,12 +11,14 @@ import Login from './pages/Login'
 
 ReactDOM.render(
   <React.StrictMode>
+    <ChakraProvider>
       <BrowserRouter>
         <Routes>
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
         </Routes>
       </BrowserRouter>
+    </ChakraProvider>
   </React.StrictMode>,
   document.getElementById('root')
 )

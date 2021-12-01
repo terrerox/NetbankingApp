@@ -1,6 +1,7 @@
 import create from 'zustand'
 import { persist } from "zustand/middleware"
 import userSevice from '../services/userService'
+import clientService from '../services/clientService'
 
 
 export const useUserStore = create(persist(
@@ -28,12 +29,22 @@ export const useUserStore = create(persist(
           },
           register: async registerCredentials => {
             try {
-              console.log(registerCredentials)
+              const { 
+                identityCard, 
+                ...credentialsWithoutIdentityCard
+              } = registerCredentials 
+              console.log(credentialsWithoutIdentityCard)
               const registerRequest = get().registerRequest
               const registerSuccess = get().registerSuccess
-              registerRequest(registerCredentials)
-              const id = await userSevice.register(registerCredentials)
-              console.log(id)
+              registerRequest(credentialsWithoutIdentityCard)
+              const id = await userSevice.register(credentialsWithoutIdentityCard)
+              const client = await clientService.getByIdentityCard(identityCard)
+              if(client.success) {
+                const {userId, ...clientWithoutUserId} = client.data
+                const clientData = {...clientWithoutUserId, userId: id}
+                const clienta = await clientService.update(clientData)
+                console.log(clienta)
+              }
               registerSuccess(id)
             } catch (error) {
               console.log(error.response)
