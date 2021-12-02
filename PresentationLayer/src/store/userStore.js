@@ -20,9 +20,10 @@ export const useUserStore = create(persist(
             try {
               const loginRequest = get().loginRequest
               const loginSuccess = get().loginSuccess
-              loginRequest(loginCredentials)
+              loginRequest(loginCredentials.user)
               const user = await userSevice.login(loginCredentials)
               loginSuccess(user)
+              return user
             } catch (error) {
               console.log(error.response)
             }
@@ -33,7 +34,6 @@ export const useUserStore = create(persist(
                 identityCard, 
                 ...credentialsWithoutIdentityCard
               } = registerCredentials 
-              console.log(credentialsWithoutIdentityCard)
               const registerRequest = get().registerRequest
               const registerSuccess = get().registerSuccess
               registerRequest(credentialsWithoutIdentityCard)
@@ -42,8 +42,7 @@ export const useUserStore = create(persist(
               if(client.success) {
                 const {userId, ...clientWithoutUserId} = client.data
                 const clientData = {...clientWithoutUserId, userId: id}
-                const clienta = await clientService.update(clientData)
-                console.log(clienta)
+                await clientService.update(clientData)
               }
               registerSuccess(id)
             } catch (error) {
