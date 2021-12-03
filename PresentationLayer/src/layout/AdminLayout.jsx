@@ -7,7 +7,7 @@ import { Box, Drawer, DrawerContent, useDisclosure } from "@chakra-ui/react";
 const AdminLayout = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
     return (
-        <Box minH="100vh" bg="gray.100">
+        <Box minH="100vh" bg="gray.50">
         <Sidebar
           onClose={() => onClose}
           display={{ base: "none", md: "block" }}

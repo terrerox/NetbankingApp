@@ -9,7 +9,7 @@ import {
 import AdminLayout from './layout/AdminLayout'
 import Register from './pages/Register'
 import Login from './pages/Login'
-import Admin from './pages/Admin'
+import Clients from './pages/Admin/Clients'
 import Client from './pages/Client'
 
 ReactDOM.render(
@@ -18,7 +18,7 @@ ReactDOM.render(
       <BrowserRouter>
         <Routes>
           <Route path="admin" element={<AdminLayout />}>
-            <Route path="clients" element={<Admin />} />
+            <Route path="clients" element={<Clients />} />
           </Route>
           <Route path="client" element={<AdminLayout />}>
             <Route path="" element={<Client />} />

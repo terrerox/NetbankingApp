@@ -23,9 +23,11 @@ export const useUserStore = create(persist(
               loginRequest(loginCredentials.user)
               const user = await userSevice.login(loginCredentials)
               loginSuccess(user)
+              console.log(user)
               return user
             } catch (error) {
-              console.log(error.response)
+              const loginFailure = get().loginFailure
+              loginFailure()
             }
           },
           register: async registerCredentials => {
@@ -39,6 +41,7 @@ export const useUserStore = create(persist(
               registerRequest(credentialsWithoutIdentityCard)
               const id = await userSevice.register(credentialsWithoutIdentityCard)
               const client = await clientService.getByIdentityCard(identityCard)
+                console.log(client)
               if(client.success) {
                 const {userId, ...clientWithoutUserId} = client.data
                 const clientData = {...clientWithoutUserId, userId: id}
