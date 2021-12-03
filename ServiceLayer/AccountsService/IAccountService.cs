@@ -13,7 +13,7 @@ namespace ServiceLayer.AccountsService
         Task<ServiceResponse<GetAccountDto>> GetAccountById(Guid id);
         Task<ServiceResponse<GetAccountDto>> GetAccountByNumber(int number);
         Task<ServiceResponse<List<GetAccountDto>>> AddAccount(AddAccountDto newAccount);
-        Task<ServiceResponse<GetAccountDto>> UpdateAccount(UpdateAccountDto updatedAccount);
+        Task<ServiceResponse<List<GetAccountDto>>> UpdateAccount(UpdateAccountDto updatedAccount);
         Task<ServiceResponse<List<GetAccountDto>>> DeleteAccount(Guid id); 
     }
 }

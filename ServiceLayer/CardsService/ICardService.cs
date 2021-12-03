@@ -12,7 +12,7 @@ namespace ServiceLayer.CardsService
         Task<ServiceResponse<List<GetCardDto>>> GetAllCards();
         Task<ServiceResponse<GetCardDto>> GetCardById(Guid id);
         Task<ServiceResponse<List<GetCardDto>>> AddCard(AddCardDto newCard);
-        Task<ServiceResponse<GetCardDto>> UpdateCard(UpdateCardDto updatedCard);
+        Task<ServiceResponse<List<GetCardDto>>> UpdateCard(UpdateCardDto updatedCard);
         Task<ServiceResponse<List<GetCardDto>>> DeleteCard(Guid id); 
     }
 }

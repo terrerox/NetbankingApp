@@ -100,9 +100,9 @@ namespace ServiceLayer.ClientsService
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<GetClientDto>> UpdateClient(UpdateClientDto updatedClient)
+        public async Task<ServiceResponse<List<GetClientDto>>> UpdateClient(UpdateClientDto updatedClient)
         {
-            ServiceResponse<GetClientDto> serviceResponse = new ServiceResponse<GetClientDto>();
+            ServiceResponse<List<GetClientDto>> serviceResponse = new ServiceResponse<List<GetClientDto>>();
             try
             {
                 Client client = 
@@ -118,7 +118,8 @@ namespace ServiceLayer.ClientsService
                     client.UserId = updatedClient.UserId;
                     _context.Clients.Update(client);
                     await _context.SaveChangesAsync();
-                    serviceResponse.Data = _mapper.Map<GetClientDto>(client);
+                    serviceResponse.Data =(_context.Clients.Where(c => c.Status == ClientStatus.Active)
+                                                .Select(c => _mapper.Map<GetClientDto>(c))).ToList();                
                 }
                 else
                 {

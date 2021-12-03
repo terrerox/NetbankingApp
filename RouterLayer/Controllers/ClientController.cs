@@ -46,7 +46,7 @@ namespace RouterLayer.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateClient(UpdateClientDto updatedClient)
         {
-            ServiceResponse<GetClientDto> response = await _clientService.UpdateClient(updatedClient);
+            ServiceResponse<List<GetClientDto>> response = await _clientService.UpdateClient(updatedClient);
             if (response.Data == null)         
                 return NotFound(response);
             

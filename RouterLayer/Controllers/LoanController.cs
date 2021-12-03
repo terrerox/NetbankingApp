@@ -40,7 +40,7 @@ namespace RouterLayer.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateLoan(UpdateLoanDto updatedLoan)
         {
-            ServiceResponse<GetLoanDto> response = await _loanService.UpdateLoan(updatedLoan);
+            ServiceResponse<List<GetLoanDto>> response = await _loanService.UpdateLoan(updatedLoan);
             if (response.Data == null)         
                 return NotFound(response);
             

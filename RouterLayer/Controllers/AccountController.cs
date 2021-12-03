@@ -40,7 +40,7 @@ namespace RouterLayer.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateAccount(UpdateAccountDto updatedAccount)
         {
-            ServiceResponse<GetAccountDto> response = await _accountService.UpdateAccount(updatedAccount);
+            ServiceResponse<List<GetAccountDto>> response = await _accountService.UpdateAccount(updatedAccount);
             if (response.Data == null)         
                 return NotFound(response);
             

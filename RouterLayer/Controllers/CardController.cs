@@ -40,7 +40,7 @@ namespace RouterLayer.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateCard(UpdateCardDto updatedCard)
         {
-            ServiceResponse<GetCardDto> response = await _cardService.UpdateCard(updatedCard);
+            ServiceResponse<List<GetCardDto>> response = await _cardService.UpdateCard(updatedCard);
             if (response.Data == null)         
                 return NotFound(response);
             

@@ -105,9 +105,9 @@ namespace ServiceLayer.AccountsService
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<GetAccountDto>> UpdateAccount(UpdateAccountDto updatedAccount)
+        public async Task<ServiceResponse<List<GetAccountDto>>> UpdateAccount(UpdateAccountDto updatedAccount)
         {
-            ServiceResponse<GetAccountDto> serviceResponse = new ServiceResponse<GetAccountDto>();
+            ServiceResponse<List<GetAccountDto>> serviceResponse = new ServiceResponse<List<GetAccountDto>>();
             try
             {
                 Account Account = await _context.Accounts.FirstOrDefaultAsync(c => c.Id == updatedAccount.Id);
@@ -118,7 +118,8 @@ namespace ServiceLayer.AccountsService
                     Account.Balance = updatedAccount.Balance;
                     _context.Accounts.Update(Account);
                     await _context.SaveChangesAsync();
-                    serviceResponse.Data = _mapper.Map<GetAccountDto>(Account);
+                    serviceResponse.Data = (_context.Accounts.Where(c => c.Status == AccountStatus.Active)
+                                                .Select(c => _mapper.Map<GetAccountDto>(c))).ToList();      
                 }
                 else
                 {

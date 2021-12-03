@@ -13,7 +13,7 @@ namespace ServiceLayer.ClientsService
         Task<ServiceResponse<GetClientDto>> GetClientById(Guid id);
         Task<ServiceResponse<GetClientDto>> GetClientByIdentityCard(string IdentityCard);
         Task<ServiceResponse<List<GetClientDto>>> AddClient(AddClientDto newClient);
-        Task<ServiceResponse<GetClientDto>> UpdateClient(UpdateClientDto updatedClient);
+        Task<ServiceResponse<List<GetClientDto>>> UpdateClient(UpdateClientDto updatedClient);
         Task<ServiceResponse<List<GetClientDto>>> DeleteClient(Guid id); 
 
     }

@@ -79,9 +79,9 @@ namespace ServiceLayer.LoansService
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<GetLoanDto>> UpdateLoan(UpdateLoanDto updatedLoan)
+        public async Task<ServiceResponse<List<GetLoanDto>>> UpdateLoan(UpdateLoanDto updatedLoan)
         {
-            ServiceResponse<GetLoanDto> serviceResponse = new ServiceResponse<GetLoanDto>();
+            ServiceResponse<List<GetLoanDto>> serviceResponse = new ServiceResponse<List<GetLoanDto>>();
             try
             {
                 Loan loan = 
@@ -94,7 +94,8 @@ namespace ServiceLayer.LoansService
                     loan.AmountOfFees = updatedLoan.AmountOfFees;
                     _context.Loans.Update(loan);
                     await _context.SaveChangesAsync();
-                    serviceResponse.Data = _mapper.Map<GetLoanDto>(loan);
+                    serviceResponse.Data = (_context.Loans.Where(c => c.Status == LoanStatus.Active)
+                                                .Select(c => _mapper.Map<GetLoanDto>(c))).ToList();                
                 }
                 else
                 {

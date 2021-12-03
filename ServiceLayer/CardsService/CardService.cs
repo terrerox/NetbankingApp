@@ -87,9 +87,9 @@ namespace ServiceLayer.CardsService
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<GetCardDto>> UpdateCard(UpdateCardDto updatedCard)
+        public async Task<ServiceResponse<List<GetCardDto>>> UpdateCard(UpdateCardDto updatedCard)
         {
-            ServiceResponse<GetCardDto> serviceResponse = new ServiceResponse<GetCardDto>();
+            ServiceResponse<List<GetCardDto>> serviceResponse = new ServiceResponse<List<GetCardDto>>();
             try
             {
                 Card card = 
@@ -103,7 +103,8 @@ namespace ServiceLayer.CardsService
                     card.Status = updatedCard.Status;
                     _context.Cards.Update(card);
                     await _context.SaveChangesAsync();
-                    serviceResponse.Data = _mapper.Map<GetCardDto>(card);
+                    serviceResponse.Data =(_context.Cards.Where(c => c.Status == CardStatus.Active)
+                                                .Select(c => _mapper.Map<GetCardDto>(c))).ToList();                
                 }
                 else
                 {
