@@ -1,24 +1,36 @@
 import React from 'react'
-import { Link } from "react-router-dom";
-import { Flex, Icon, Text } from "@chakra-ui/react";
+import { NavLink as ReachLink, useLocation} from "react-router-dom";
+import { Flex, Icon, Text, Link } from "@chakra-ui/react";
 
 const NavLink = ({ link, ...rest }) => {
-    const { label, to, icon } = link;
-    return (
-        <Link to={to} as="a">
-          <Flex
-            align="center"
-            p="4"
-            mx="4"
-            borderRadius="lg"
-            role="group"
-            cursor="pointer"
-            _hover={{
-              bg: "cyan.400",
-              color: "white",
-            }}
-            {...rest}
-          >
+  const { label, to, icon } = link
+  const { pathname } = useLocation();
+  const isActive = pathname === to
+  return (
+    <Link
+      to={to}
+      as={ReachLink}
+    >
+        <Flex
+          align="center"
+          p="4"
+          mx="4"
+          my="2"
+          borderRadius="lg"
+          role="group"
+          cursor="pointer"
+          bg={
+            isActive && 'teal'
+          }
+          color={
+            isActive && 'white'
+          }
+          _hover={{
+            bg: "teal",
+            color: "white",
+          }}
+          {...rest}
+        >
           {icon && (
             <Icon
               mr="4"
@@ -29,10 +41,10 @@ const NavLink = ({ link, ...rest }) => {
               as={icon}
             />
           )}
-            <Text fontSize="1.2rem">{label}</Text>
-          </Flex>
+          <Text fontSize="1.2rem">{label}</Text>
+        </Flex>
       </Link>
-    )
+  )
 }
 
 export default NavLink
