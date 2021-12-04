@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link as ReachLink } from "react-router-dom";
 import {
     Table,
     Thead,
@@ -10,6 +11,7 @@ import {
     TableCaption,
     Button,
     Flex,
+    Link,
     useToast
 } from '@chakra-ui/react'
 import {
@@ -61,9 +63,12 @@ const ClientsTable = ({ onOpen }) => {
                     clients.map(client => (
                         <Tr key={client.id}>
                             <Td>
+                            <Link as={ReachLink} to={`${client.id}`}>
                                 <Button colorScheme='teal' variant='solid'>
                                     Productos
                                 </Button>
+                            </Link>
+
                             </Td>
                             <Td>{client.identityCard}</Td>
                             <Td>{client.name}</Td>

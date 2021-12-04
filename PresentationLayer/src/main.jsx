@@ -10,6 +10,7 @@ import AdminLayout from './layout/AdminLayout'
 import Register from './pages/Register'
 import Login from './pages/Login'
 import Clients from './pages/Admin/Clients'
+import Products from './pages/Admin/Products'
 import Client from './pages/Client'
 
 ReactDOM.render(
@@ -19,6 +20,7 @@ ReactDOM.render(
         <Routes>
           <Route path="admin" element={<AdminLayout />}>
             <Route path="clients" element={<Clients />} />
+            <Route path="clients/:clientId" element={<Products />} />
           </Route>
           <Route path="client" element={<AdminLayout />}>
             <Route path="" element={<Client />} />
