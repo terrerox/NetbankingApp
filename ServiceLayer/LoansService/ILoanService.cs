@@ -9,7 +9,7 @@ namespace ServiceLayer.LoansService
 {
     public interface ILoanService
     {
-        Task<ServiceResponse<List<GetLoanDto>>> GetAllLoans();
+        Task<ServiceResponse<List<GetLoanDto>>> GetAllLoans(Guid clientId);
         Task<ServiceResponse<GetLoanDto>> GetLoanById(Guid id);
         Task<ServiceResponse<List<GetLoanDto>>> AddLoan(AddLoanDto newLoan);
         Task<ServiceResponse<List<GetLoanDto>>> UpdateLoan(UpdateLoanDto updatedLoan);

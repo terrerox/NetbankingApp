@@ -60,10 +60,10 @@ namespace ServiceLayer.CardsService
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<List<GetCardDto>>> GetAllCards()
+        public async Task<ServiceResponse<List<GetCardDto>>> GetAllCards(Guid clientId)
         {
             ServiceResponse<List<GetCardDto>> serviceResponse = new ServiceResponse<List<GetCardDto>>();
-            List<Card> dbCards = await _context.Cards.Where(c => c.Status == CardStatus.Active).ToListAsync();
+            List<Card> dbCards = await _context.Cards.Where(c => c.Status == CardStatus.Active && c.ClientId == clientId).ToListAsync();
             serviceResponse.Data = dbCards.Select(c => _mapper.Map<GetCardDto>(c)).ToList();
             return serviceResponse;
         }

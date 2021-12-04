@@ -19,10 +19,10 @@ namespace RouterLayer.Controllers
             _accountService = accountService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        [HttpGet("{clientId}")]
+        public async Task<IActionResult> Get(Guid clientId)
         {
-            return Ok(await _accountService.GetAllAccounts());
+            return Ok(await _accountService.GetAllAccounts(clientId));
         }
 
         [HttpGet("{id}")]

@@ -9,7 +9,7 @@ namespace ServiceLayer.AccountsService
 {
     public interface IAccountService
     {
-        Task<ServiceResponse<List<GetAccountDto>>> GetAllAccounts();
+        Task<ServiceResponse<List<GetAccountDto>>> GetAllAccounts(Guid clientId);
         Task<ServiceResponse<GetAccountDto>> GetAccountById(Guid id);
         Task<ServiceResponse<GetAccountDto>> GetAccountByNumber(int number);
         Task<ServiceResponse<List<GetAccountDto>>> AddAccount(AddAccountDto newAccount);

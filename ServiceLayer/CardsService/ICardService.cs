@@ -9,7 +9,7 @@ namespace ServiceLayer.CardsService
 {
     public interface ICardService
     {
-        Task<ServiceResponse<List<GetCardDto>>> GetAllCards();
+        Task<ServiceResponse<List<GetCardDto>>> GetAllCards(Guid clientId);
         Task<ServiceResponse<GetCardDto>> GetCardById(Guid id);
         Task<ServiceResponse<List<GetCardDto>>> AddCard(AddCardDto newCard);
         Task<ServiceResponse<List<GetCardDto>>> UpdateCard(UpdateCardDto updatedCard);

@@ -28,7 +28,8 @@ namespace ServiceLayer.ClientsService
 
             await _context.Clients.AddAsync(client);
             await _context.SaveChangesAsync();
-            serviceResponse.Data = (_context.Clients.Select(c => _mapper.Map<GetClientDto>(c))).ToList();
+            serviceResponse.Data = (_context.Clients.Where(c => c.Status == ClientStatus.Active)
+                                    .Select(c => _mapper.Map<GetClientDto>(c))).ToList();
             return serviceResponse;
         }
 
