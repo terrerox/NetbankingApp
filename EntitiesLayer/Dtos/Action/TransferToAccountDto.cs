@@ -14,7 +14,7 @@ namespace EntitiesLayer.Dtos.Action
         [Required]
         public DateTime Date { get; set; }
         [Required]
-        public int ToAccountNumber { get; set; }
+        public string ToAccountNumber { get; set; }
         [Required]
         public Guid AccountId { get; set; }
     }

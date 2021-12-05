@@ -28,7 +28,8 @@ namespace ServiceLayer.AccountsService
 
             await _context.Accounts.AddAsync(account);
             await _context.SaveChangesAsync();
-            serviceResponse.Data = (_context.Accounts.Select(c => _mapper.Map<GetAccountDto>(c))).ToList();
+            serviceResponse.Data = (_context.Accounts.Where(c => c.Status == AccountStatus.Active && c.ClientId == newAccount.ClientId)
+                                    .Select(c => _mapper.Map<GetAccountDto>(c))).ToList();
             return serviceResponse;
         }
 
@@ -43,7 +44,7 @@ namespace ServiceLayer.AccountsService
                     account.Status = AccountStatus.Inactive;
                     _context.Accounts.Update(account);
                     await _context.SaveChangesAsync();
-                    serviceResponse.Data = (_context.Accounts.Where(c => c.Status == AccountStatus.Active)
+                    serviceResponse.Data = (_context.Accounts.Where(c => c.Status == AccountStatus.Active && c.ClientId == account.ClientId)
                                                 .Select(c => _mapper.Map<GetAccountDto>(c))).ToList();                
                 }
                 else
@@ -86,7 +87,7 @@ namespace ServiceLayer.AccountsService
             }
             return serviceResponse;
         }
-        public async Task<ServiceResponse<GetAccountDto>> GetAccountByNumber(int number)
+        public async Task<ServiceResponse<GetAccountDto>> GetAccountByNumber(string number)
         {
             ServiceResponse<GetAccountDto> serviceResponse = new ServiceResponse<GetAccountDto>();
             try
@@ -110,15 +111,15 @@ namespace ServiceLayer.AccountsService
             ServiceResponse<List<GetAccountDto>> serviceResponse = new ServiceResponse<List<GetAccountDto>>();
             try
             {
-                Account Account = await _context.Accounts.FirstOrDefaultAsync(c => c.Id == updatedAccount.Id);
-                if (Account != null)
+                Account account = await _context.Accounts.FirstOrDefaultAsync(c => c.Id == updatedAccount.Id);
+                if (account != null)
                 {
-                    Account.Number = updatedAccount.Number;
-                    Account.Status = updatedAccount.Status;
-                    Account.Balance = updatedAccount.Balance;
-                    _context.Accounts.Update(Account);
+                    account.Number = updatedAccount.Number;
+                    account.Status = updatedAccount.Status;
+                    account.Balance = updatedAccount.Balance;
+                    _context.Accounts.Update(account);
                     await _context.SaveChangesAsync();
-                    serviceResponse.Data = (_context.Accounts.Where(c => c.Status == AccountStatus.Active)
+                    serviceResponse.Data = (_context.Accounts.Where(c => c.Status == AccountStatus.Active && c.ClientId == account.ClientId)
                                                 .Select(c => _mapper.Map<GetAccountDto>(c))).ToList();      
                 }
                 else

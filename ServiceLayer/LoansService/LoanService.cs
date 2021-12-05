@@ -28,7 +28,8 @@ namespace ServiceLayer.LoansService
 
             await _context.Loans.AddAsync(loan);
             await _context.SaveChangesAsync();
-            serviceResponse.Data = (_context.Loans.Select(c => _mapper.Map<GetLoanDto>(c))).ToList();
+            serviceResponse.Data = (_context.Loans.Where(c => c.Status == LoanStatus.Active && c.ClientId == newLoan.ClientId)
+                                    .Select(c => _mapper.Map<GetLoanDto>(c))).ToList();
             return serviceResponse;
         }
 
@@ -43,7 +44,7 @@ namespace ServiceLayer.LoansService
                     loan.Status = LoanStatus.Inactive;
                     _context.Loans.Update(loan);
                     await _context.SaveChangesAsync();
-                    serviceResponse.Data = (_context.Loans.Where(c => c.Status == LoanStatus.Active)
+                    serviceResponse.Data = (_context.Loans.Where(c => c.Status == LoanStatus.Active && c.ClientId == loan.ClientId)
                                                 .Select(c => _mapper.Map<GetLoanDto>(c))).ToList();                
                 }
                 else
@@ -94,7 +95,7 @@ namespace ServiceLayer.LoansService
                     loan.AmountOfFees = updatedLoan.AmountOfFees;
                     _context.Loans.Update(loan);
                     await _context.SaveChangesAsync();
-                    serviceResponse.Data = (_context.Loans.Where(c => c.Status == LoanStatus.Active)
+                    serviceResponse.Data = (_context.Loans.Where(c => c.Status == LoanStatus.Active && c.ClientId == loan.ClientId)
                                                 .Select(c => _mapper.Map<GetLoanDto>(c))).ToList();                
                 }
                 else

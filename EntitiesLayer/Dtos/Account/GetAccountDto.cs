@@ -9,7 +9,7 @@ namespace EntitiesLayer.Dtos.Account
     public class GetAccountDto
     {
         public Guid  Id  { get; set; }
-        public int Number { get; set; }
+        public string Number { get; set; }
         public AccountStatus Status { get; set;}
         public double Balance { get; set; }
     }

@@ -10,7 +10,7 @@ namespace EntitiesLayer.Dtos.Account
     public class AddAccountDto
     {
         [Required]
-        public int Number { get; set; }
+        public string Number { get; set; }
         [Required]
         public AccountStatus Status { get; set;} = AccountStatus.Active;
         [Required]

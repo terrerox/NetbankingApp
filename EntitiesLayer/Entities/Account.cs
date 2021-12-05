@@ -10,7 +10,7 @@ namespace EntitiesLayer.Entities
     public class Account
     {
         public Guid  Id  { get; set; }
-        public int Number { get; set; }
+        public string Number { get; set; }
         public AccountStatus Status { get; set;}
         public double Balance { get; set; }
         [ForeignKey("Client")]

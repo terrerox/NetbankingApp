@@ -10,7 +10,7 @@ namespace EntitiesLayer.Dtos.Account
     public class UpdateAccountDto
     {
 
-        public UpdateAccountDto(Guid id, int number, AccountStatus status, double balance) 
+        public UpdateAccountDto(Guid id, string number, AccountStatus status, double balance) 
         {
             this.Id = id;
             this.Number = number;
@@ -21,7 +21,7 @@ namespace EntitiesLayer.Dtos.Account
         [Required]
         public Guid  Id  { get; set; }
         [Required]
-        public int Number { get; set; }
+        public string Number { get; set; }
         [Required]
         public AccountStatus Status { get; set;} = AccountStatus.Active;
         [Required]

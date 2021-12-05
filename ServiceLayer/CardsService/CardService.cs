@@ -28,7 +28,8 @@ namespace ServiceLayer.CardsService
 
             await _context.Cards.AddAsync(card);
             await _context.SaveChangesAsync();
-            serviceResponse.Data = (_context.Cards.Select(c => _mapper.Map<GetCardDto>(c))).ToList();
+            serviceResponse.Data = (_context.Cards.Where(c => c.Status == CardStatus.Active && c.ClientId == newCard.ClientId)
+                                    .Select(c => _mapper.Map<GetCardDto>(c))).ToList();
             return serviceResponse;
         }
 
@@ -43,7 +44,7 @@ namespace ServiceLayer.CardsService
                     card.Status = CardStatus.Inactive;
                     _context.Cards.Update(card);
                     await _context.SaveChangesAsync();
-                    serviceResponse.Data = (_context.Cards.Where(c => c.Status == CardStatus.Active)
+                    serviceResponse.Data = (_context.Cards.Where(c => c.Status == CardStatus.Active && c.ClientId == card.ClientId)
                                                 .Select(c => _mapper.Map<GetCardDto>(c))).ToList();                
                 }
                 else
@@ -103,7 +104,7 @@ namespace ServiceLayer.CardsService
                     card.Status = updatedCard.Status;
                     _context.Cards.Update(card);
                     await _context.SaveChangesAsync();
-                    serviceResponse.Data =(_context.Cards.Where(c => c.Status == CardStatus.Active)
+                    serviceResponse.Data =(_context.Cards.Where(c => c.Status == CardStatus.Active && c.ClientId == card.ClientId)
                                                 .Select(c => _mapper.Map<GetCardDto>(c))).ToList();                
                 }
                 else
