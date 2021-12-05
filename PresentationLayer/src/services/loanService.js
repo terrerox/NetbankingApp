@@ -2,7 +2,7 @@ import { httpClient } from '../helpers'
 const loanService = {}
 
 loanService.getAll = (clientId) => {
-  return httpClient.get(`loan/${clientId}`)
+  return httpClient.get(`loan/get-all/${clientId}`)
     .then(response => response.data.data)
 }
 

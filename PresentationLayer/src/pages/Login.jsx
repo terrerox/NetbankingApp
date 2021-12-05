@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useUserStore } from '../store'
-import { useNavigate } from "react-router-dom";
-import { Link as ReachLink } from "react-router-dom";
+import { useNavigate, Link as ReachLink } from "react-router-dom";
 import {
     Flex,
     Box,

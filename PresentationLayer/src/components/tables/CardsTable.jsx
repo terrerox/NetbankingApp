@@ -10,29 +10,27 @@ import {
     TableCaption,
     Button,
     Flex,
-    AlertIcon,
-    Alert,
     useToast
 } from '@chakra-ui/react'
 import {
     FiPenTool,
     FiDelete
 } from "react-icons/fi";
-import { useLoanStore } from '../../store'
+import { useCardStore } from '../../store'
 
-const LoansTable = ({ onOpen }) => {
-    const loans = useLoanStore(state => state.loans)
-    const setLoan = useLoanStore(state => state.setLoan)
-    const deleteLoanAction = useLoanStore(state => state.deleteLoan)
+const CardsTable = ({ onOpen }) => {
+    const cards = useCardStore(state => state.cards)
+    const setCard = useCardStore(state => state.setCard)
+    const deleteCardAction = useCardStore(state => state.deleteCard)
     const toast = useToast()
 
-    const updateLoan = (loan) => {
-        setLoan(loan)
+    const updateCard = (card) => {
+        setCard(card)
         onOpen()
     }
 
-    const deleteLoan = (id) => {
-        deleteLoanAction(id)
+    const deleteCard = (id) => {
+        deleteCardAction(id)
             .then(
                 toast({
                     title: "Eliminado",
@@ -46,29 +44,29 @@ const LoansTable = ({ onOpen }) => {
     return (
         <Table variant='striped' colorScheme='teal'>
             <TableCaption>
-                Esto son todos los prestamos registrados hasta el momento
+                Esto son todos las tarjetas registradas hasta el momento
             </TableCaption>
             <Thead>
                 <Tr>
+                    <Th>Tipo</Th>
                     <Th>Monto</Th>
-                    <Th>Motivo</Th>
-                    <Th>Cantidad de cuotas</Th>
+                    <Th>Balance</Th>
                 </Tr>
             </Thead>
             <Tbody>
                 {
-                    loans.map(loan => (
-                        <Tr key={loan.id}>
-                            <Td>{loan.amount}</Td>
-                            <Td>{loan.description}</Td>
-                            <Td>{loan.amountOfFees}</Td>
+                    cards.map(card => (
+                        <Tr key={card.id}>
+                            <Td>Débito</Td>
+                            <Td>{card.amount}</Td>
+                            <Td>{card.balance}</Td>
                             <Td>
                                 <Flex alignItems="center" justifyContent="space-around">
                                     <Button
                                         leftIcon={<FiPenTool />}
                                         colorScheme='blue'
                                         variant='solid'
-                                        onClick={() => updateLoan(loan)}
+                                        onClick={() => updateCard(card)}
                                     >
                                         Editar
                                     </Button>
@@ -76,7 +74,7 @@ const LoansTable = ({ onOpen }) => {
                                         leftIcon={<FiDelete />}
                                         colorScheme='red'
                                         variant='solid'
-                                        onClick={() => deleteLoan(loan.id)}
+                                        onClick={() => deleteCard(card.id)}
                                     >
                                         Eliminar
                                     </Button>
@@ -88,13 +86,13 @@ const LoansTable = ({ onOpen }) => {
             </Tbody>
             <Tfoot>
                 <Tr>
+                    <Th>Tipo</Th>
                     <Th>Monto</Th>
-                    <Th>Motivo</Th>
-                    <Th>Cantidad de cuotas</Th>
+                    <Th>Balance</Th>
                 </Tr>
             </Tfoot>
         </Table>
     )
 }
 
-export default LoansTable
+export default CardsTable

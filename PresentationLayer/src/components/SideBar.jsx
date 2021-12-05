@@ -13,11 +13,7 @@ import {
 
 
 const LinkItems = [
-    { label: "Clientes", icon: FiUsers, to: "/admin/clients" },
-    { label: "Trending", icon: FiTrendingUp, to: "/" },
-    { label: "Explore", icon: FiCompass, to: "/" },
-    { label: "Favourites", icon: FiStar, to: "/" },
-    { label: "Settings", icon: FiSettings, to: "/" },
+    { label: "Clientes", icon: FiUsers, to: "/admin/clients" }
 ];
 
 const SideBar = ({ onClose, ...rest }) => {

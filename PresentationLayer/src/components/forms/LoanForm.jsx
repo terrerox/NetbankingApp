@@ -6,17 +6,18 @@ import {
     Button,
 } from '@chakra-ui/react';
 import { useLoanStore } from '../../store'
-import IdentityCardInput from '../../components/IdentityCardInput'
-import PhoneNumberInput from '../../components/PhoneNumberInput'
+import { useParams } from 'react-router-dom';
 
 const LoanForm = ({ loan, setLoan }) => {
+    const { clientId } = useParams()
     const selectedLoan = useLoanStore(state => state.loan)
+    
     useEffect(() => {
         setLoan({
             amount: selectedLoan.amount || 0,
             description: selectedLoan.description || '',
             amountOfFees: selectedLoan.amountOfFees || 0,
-            clientId: selectedLoan.clientId || ''
+            clientId: selectedLoan.clientId || clientId
         })
     }, [])
     const { amount, description, amountOfFees } = loan;

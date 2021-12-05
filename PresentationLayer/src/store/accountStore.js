@@ -33,6 +33,7 @@ export const useAccountStore = create(persist(
               const accountRequest = get().accountRequest
               const accountSuccess = get().accountSuccess
               const setAccounts = get().setAccounts
+              console.log(account)
               accountRequest()
               const accounts = await accountService.add(account)
               setAccounts(accounts)

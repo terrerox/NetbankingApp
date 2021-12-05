@@ -2,7 +2,7 @@ import { httpClient } from '../helpers'
 const accountService = {}
 
 accountService.getAll = (clientId) => {
-  return httpClient.get(`account/${clientId}`)
+  return httpClient.get(`account/get-all/${clientId}`)
     .then(response => response.data.data)
 }
 
@@ -12,6 +12,7 @@ accountService.update = (account) => {
 }
 
 accountService.add = (account) => {
+  console.log(account)
   return httpClient.post('account', account)
     .then(response => response.data.data)
 }

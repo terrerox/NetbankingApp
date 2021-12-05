@@ -122,7 +122,7 @@ const Register = () => {
 
                         <Text align="center"  mt="2px">
                             ¿Ya tienes una cuenta?                             
-                            <Link as={ReachLink} ml="2px" color='teal' to="/login">
+                            <Link as={ReachLink} ml="2px" color='teal' to="/">
                                 Inicia sesión aquí
                             </Link>
                         </Text>

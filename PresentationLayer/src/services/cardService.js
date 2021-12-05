@@ -2,7 +2,7 @@ import { httpClient } from '../helpers'
 const cardService = {}
 
 cardService.getAll = (clientId) => {
-  return httpClient.get(`card/${clientId}`)
+  return httpClient.get(`card/get-all/${clientId}`)
     .then(response => response.data.data)
 }
 

@@ -10,27 +10,26 @@ import {
     Button,
     useToast
 } from '@chakra-ui/react'
-import { useLoanStore } from '../../store'
-import LoanForm from '../forms/LoanForm'
+import { useCardStore } from '../../store'
+import CardForm from '../forms/CardForm'
 
-const LoanModal = ({ isOpen, onClose }) => {
+const CardModal = ({ isOpen, onClose }) => {
 
-    const selectedLoan = useLoanStore(state => state.loan)
-    const [loan, setLoan] = useState({
+    const selectedCard = useCardStore(state => state.card)
+    const [card, setCard] = useState({
         amount: 0,
-        description: '',
-        amountOfFees: 0,
+        balance: 0,
         clientId: ''
     });
     const toast = useToast()
-    const addLoan = useLoanStore(state => state.addLoan)
-    const updateLoan = useLoanStore(state => state.updateLoan)
-    const status = useLoanStore(state => state.status)
+    const addCard = useCardStore(state => state.addCard)
+    const updateCard = useCardStore(state => state.updateCard)
+    const status = useCardStore(state => state.status)
 
-    const { amount, description, amountOfFees } = loan
+    const { amount, balance } = card
     const handleSubmit = async e => {
         e.preventDefault()
-        if (amount === 0 || description.trim() === '' || amountOfFees === 0) {
+        if (amount === 0 || balance === 0) {
             return toast({
                 title: "Error",
                 description: "Favor completar todos los campos",
@@ -39,16 +38,16 @@ const LoanModal = ({ isOpen, onClose }) => {
                 isClosable: true,
             })
         }
-        selectedLoan.id
+        selectedCard.id
             ? (
-                updateLoan({
-                id: selectedLoan.id,
-                ...loan
+                updateCard({
+                id: selectedCard.id,
+                ...card
                 })
                 .then(
                     toast({
                         title: "Actualizado",
-                        description: "¡Prestamo actualizado correctamente!",
+                        description: "¡Tarjeta actualizada correctamente!",
                         status: "success",
                         duration: 9000,
                         isClosable: true,
@@ -56,11 +55,11 @@ const LoanModal = ({ isOpen, onClose }) => {
                 )
               )
             : (
-                addLoan(loan)
+                addCard(card)
                 .then(
                     toast({
                         title: "Agregado",
-                        description: "¡Prestamo agregado correctamente!",
+                        description: "¡Tarjeta agregada correctamente!",
                         status: "success",
                         duration: 9000,
                         isClosable: true,
@@ -74,16 +73,16 @@ const LoanModal = ({ isOpen, onClose }) => {
             <ModalContent>
                 <ModalHeader>
                     {
-                        selectedLoan.id
-                            ? 'Actualizar Prestamo'
-                            : 'Agregar Prestamo'
+                        selectedCard.id
+                            ? 'Actualizar Tarjeta'
+                            : 'Agregar Tarjeta'
                     }
                 </ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
-                    <LoanForm
-                        loan={loan}
-                        setLoan={setLoan}
+                    <CardForm
+                        card={card}
+                        setCard={setCard}
                     />
                 </ModalBody>
 
@@ -96,7 +95,7 @@ const LoanModal = ({ isOpen, onClose }) => {
                         onClick={handleSubmit}
                         colorScheme='teal'
                     >
-                        {selectedLoan.id ? 'Actualizar' : 'Agregar'}
+                        {selectedCard.id ? 'Actualizar' : 'Agregar'}
                     </Button>
                 </ModalFooter>
             </ModalContent>
@@ -104,4 +103,4 @@ const LoanModal = ({ isOpen, onClose }) => {
     )
 }
 
-export default LoanModal
+export default CardModal

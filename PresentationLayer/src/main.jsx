@@ -25,7 +25,7 @@ ReactDOM.render(
           <Route path="client" element={<AdminLayout />}>
             <Route path="" element={<Client />} />
           </Route>
-          <Route path="login" element={<Login />} />
+          <Route path="" element={<Login />} />
           <Route path="register" element={<Register />} />
         </Routes>
       </BrowserRouter>

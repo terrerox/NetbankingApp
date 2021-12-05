@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link as ReachLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
     Table,
     Thead,
@@ -11,7 +11,6 @@ import {
     TableCaption,
     Button,
     Flex,
-    Link,
     useToast
 } from '@chakra-ui/react'
 import {
@@ -25,12 +24,18 @@ const ClientsTable = ({ onOpen }) => {
     const setClient = useClientStore(state => state.setClient)
     const deleteClientAction = useClientStore(state => state.deleteClient)
     const toast = useToast()
+    const navigate = useNavigate()
+
+    const goToProducts = (client) => {
+        setClient(client)
+        navigate(client.id)
+    }
 
     const updateClient = (client) => {
-      setClient(client)
-      onOpen()
+        setClient(client)
+        onOpen()
     }
-    
+
     const deleteClient = (id) => {
         deleteClientAction(id)
             .then(
@@ -63,12 +68,13 @@ const ClientsTable = ({ onOpen }) => {
                     clients.map(client => (
                         <Tr key={client.id}>
                             <Td>
-                            <Link as={ReachLink} to={`${client.id}`}>
-                                <Button colorScheme='teal' variant='solid'>
+                                <Button 
+                                    colorScheme='teal' 
+                                    variant='solid' 
+                                    onClick={() => goToProducts(client)}
+                                >
                                     Productos
                                 </Button>
-                            </Link>
-
                             </Td>
                             <Td>{client.identityCard}</Td>
                             <Td>{client.name}</Td>
@@ -76,17 +82,17 @@ const ClientsTable = ({ onOpen }) => {
                             <Td>{client.phoneNumber}</Td>
                             <Td>
                                 <Flex alignItems="center" justifyContent="space-around">
-                                    <Button 
-                                        leftIcon={<FiPenTool />} 
-                                        colorScheme='blue' 
+                                    <Button
+                                        leftIcon={<FiPenTool />}
+                                        colorScheme='blue'
                                         variant='solid'
                                         onClick={() => updateClient(client)}
                                     >
                                         Editar
                                     </Button>
-                                    <Button 
-                                        leftIcon={<FiDelete />} 
-                                        colorScheme='red' 
+                                    <Button
+                                        leftIcon={<FiDelete />}
+                                        colorScheme='red'
                                         variant='solid'
                                         onClick={() => deleteClient(client.id)}
                                     >
