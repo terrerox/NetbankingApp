@@ -12,10 +12,15 @@ export const useUserStore = create(persist(
         loginRequest : (user) => set({ status: { loggingIn: true }, user }),
         loginSuccess : (user) => set({ status: { loggedIn: true }, user }),
         loginFailure : () => set({ status: { loggedIn: false }, user: null }),
-        logout : () => set({ status: { loggedIn: false }, user: null }),
+        logoutSuccess : () => set({ status: { loggedIn: false }, user: null }),
         registerRequest : () => set({ status: { registering: true } }),
         registerSuccess : () => set({ status: {} }),
         registerFailure : () => set({ status: {} }),
+        logout: () => {
+          const logoutSuccess = get().logoutSuccess
+          userSevice.logout()
+          logoutSuccess()
+        },
         login: async loginCredentials => {
             try {
               const loginRequest = get().loginRequest

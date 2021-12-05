@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
     IconButton,
     Avatar,
@@ -8,25 +9,26 @@ import {
     Text,
     Menu,
     MenuButton,
-    MenuDivider,
     MenuItem,
     MenuList,
 } from "@chakra-ui/react";
-import { FiChevronDown, FiBell } from "react-icons/fi";
+import { FiChevronDown } from "react-icons/fi";
 import { useUserStore } from '../store'
+import { useNavigate } from "react-router-dom";
 
 
 const UserProfile = () => {
-  const user = useUserStore(state => state.user)
+    const navigate = useNavigate()
+    const user = useUserStore(state => state.user)
+    const logoutAction = useUserStore(state => state.logout)
+
+    const logout = () => {
+        logoutAction()
+        navigate('/')
+    }
 
     return (
         <HStack spacing={{ base: "0", md: "6" }}>
-            <IconButton
-                size="lg"
-                variant="ghost"
-                aria-label="open menu"
-                icon={<FiBell />}
-            />
             <Flex alignItems="center">
                 <Menu>
                     <MenuButton
@@ -44,9 +46,9 @@ const UserProfile = () => {
                                 spacing="1px"
                                 ml="2"
                             >
-                                <Text fontSize="lg">{ user.username }</Text>
+                                <Text fontSize="lg">{user.username}</Text>
                                 <Text fontSize="md" color="gray.600">
-                                { user.role === 0 ? 'Cliente' : 'Admin' }
+                                    {user.role === 0 ? 'Cliente' : 'Admin'}
                                 </Text>
                             </VStack>
                             <Box display={{ base: "none", md: "flex" }}>
@@ -55,11 +57,9 @@ const UserProfile = () => {
                         </HStack>
                     </MenuButton>
                     <MenuList fontSize="lg" bg="white" borderColor="gray.200">
-                        <MenuItem>Profile</MenuItem>
-                        <MenuItem>Settings</MenuItem>
-                        <MenuItem>Billing</MenuItem>
-                        <MenuDivider />
-                        <MenuItem>Sign out</MenuItem>
+                        <MenuItem onClick={logout}>
+                            Cerrar sesión
+                        </MenuItem>
                     </MenuList>
                 </Menu>
             </Flex>

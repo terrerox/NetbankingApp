@@ -20,8 +20,8 @@ import {
 import { useClientStore } from '../../store'
 
 const ClientsTable = ({ onOpen }) => {
-    const clients = useClientStore(state => state.clients)
     const setClient = useClientStore(state => state.setClient)
+    const clients = useClientStore(state => state.clients)
     const deleteClientAction = useClientStore(state => state.deleteClient)
     const toast = useToast()
     const navigate = useNavigate()

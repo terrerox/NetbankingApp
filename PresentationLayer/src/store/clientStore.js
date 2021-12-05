@@ -22,8 +22,7 @@ export const useClientStore = create(persist(
               const clients = await clientService.getAll()
               setClients(clients)
               clientSuccess()
-              console.log(clients)
-              return user
+              return clients
             } catch (error) {
                 console.log(error.response)
             }
