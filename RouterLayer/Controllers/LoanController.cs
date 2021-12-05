@@ -19,7 +19,7 @@ namespace RouterLayer.Controllers
             _loanService = loanService;
         }
 
-        [HttpGet("{clientId}")]
+        [HttpGet("get-all/{clientId}")]
         public async Task<IActionResult> Get(Guid clientId)
         {
             return Ok(await _loanService.GetAllLoans(clientId));
