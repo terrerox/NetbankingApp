@@ -17,9 +17,11 @@ import {
     FiDelete
 } from "react-icons/fi";
 import { useAccountStore } from '../../store'
+import { useUserStore } from '../../store'
 
 const AccountsTable = ({ onOpen }) => {
     const accounts = useAccountStore(state => state.accounts)
+    const user = useUserStore(state => state.user)
     const setAccount = useAccountStore(state => state.setAccount)
     const deleteAccountAction = useAccountStore(state => state.deleteAccount)
     const toast = useToast()

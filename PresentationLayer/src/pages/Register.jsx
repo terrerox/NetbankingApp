@@ -48,7 +48,21 @@ const Register = () => {
                 isClosable: true,
             })
         }
-        register(registerCredentials)
+        await register(registerCredentials)
+        setRegisterCredentials({
+            username: '',
+            password: '',
+            email: '',
+            identityCard: ''
+        })
+        setConfirmPassword('')
+        return toast({
+            title: "Te has registrado correctamente",
+            description: "Puedes ir a loguearte",
+            status: "success",
+            duration: 9000,
+            isClosable: true,
+        })
     }
     return (
         <Flex mt="8%" align="center" justifyContent="center">

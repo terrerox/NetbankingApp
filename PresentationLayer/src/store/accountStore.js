@@ -28,6 +28,20 @@ export const useAccountStore = create(persist(
                 console.log(error.response)
             }
           },
+          getAccountById: async (id) => {
+            try {
+              const accountRequest = get().accountRequest
+              const accountSuccess = get().accountSuccess
+              const setAccount = get().setAccount
+              accountRequest()
+              const account = await accountService.getById(id)
+              console.log(account)
+              setAccount(account)
+              accountSuccess()
+            } catch (error) {
+                console.log(error.response)
+            }
+          },
           addAccount: async (account) => {
             try {
               const accountRequest = get().accountRequest

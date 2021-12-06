@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
     Modal,
     ModalOverlay,
@@ -11,16 +12,23 @@ import {
     useToast
 } from '@chakra-ui/react'
 import { useClientStore } from '../../store'
+import { useUserStore } from '../../store'
 import ClientForm from '../forms/ClientForm'
+import clientService from '../../services/clientService'
+
 
 const ClientModal = ({ isOpen, onClose }) => {
 
     const selectedClient = useClientStore(state => state.client)
+    const user = useUserStore(state => state.user)
+    const setLoggedClient = useUserStore(state => state.setLoggedClient)
+    const navigate = useNavigate()
     const [client, setClient] = useState({
         identityCard: '',
         name: '',
         lastName: '',
-        phoneNumber: ''
+        phoneNumber: '',
+        userId: ''
     });
     const toast = useToast()
     const addClient = useClientStore(state => state.addClient)
@@ -43,31 +51,39 @@ const ClientModal = ({ isOpen, onClose }) => {
         selectedClient.id
             ? (
                 updateClient({
-                id: selectedClient.id,
-                ...client
+                    id: selectedClient.id,
+                    ...client
                 })
-                .then(
-                    toast({
-                        title: "Actualizado",
-                        description: "¡Cliente actualizado correctamente!",
-                        status: "success",
-                        duration: 9000,
-                        isClosable: true,
-                    })
-                )
-              )
+                    .then(
+                        toast({
+                            title: "Actualizado",
+                            description: "¡Cliente actualizado correctamente!",
+                            status: "success",
+                            duration: 9000,
+                            isClosable: true,
+                        })
+                    )
+            )
             : (
                 addClient(client)
-                .then(
-                    toast({
-                        title: "Agregado",
-                        description: "¡Cliente agregado correctamente!",
-                        status: "success",
-                        duration: 9000,
-                        isClosable: true,
-                    })
-                )
-              )
+                    .then(async () => {
+                        toast({
+                            title: "Agregado",
+                            description: "¡Cliente agregado correctamente!",
+                            status: "success",
+                            duration: 9000,
+                            isClosable: true,
+                        })
+                        if(user.role === 0) {
+                            const client = await clientService.getByUserId(user.id)
+                            console.log(client)
+                            setLoggedClient(client)
+                            return navigate('/client/accounts')
+                        }
+                        return onClose()
+                    }
+                    )
+            )
     }
     return (
         <Modal isOpen={isOpen} onClose={onClose}>

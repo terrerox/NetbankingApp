@@ -6,17 +6,20 @@ import {
     Button,
 } from '@chakra-ui/react';
 import { useClientStore } from '../../store'
+import { useUserStore } from '../../store'
 import IdentityCardInput from '../../components/IdentityCardInput'
 import PhoneNumberInput from '../../components/PhoneNumberInput'
 
 const ClientForm = ({ client, setClient }) => {
     const selectedClient = useClientStore(state => state.client)
+    const user = useUserStore(state => state.user)
     useEffect(() => {
         setClient({
             identityCard: selectedClient.identityCard || '',
             name: selectedClient.name || '',
             lastName: selectedClient.lastName || '',
-            phoneNumber: selectedClient.phoneNumber || ''
+            phoneNumber: selectedClient.phoneNumber || '',
+            userId: selectedClient.userId || (!user.role ? user.id : null)
         })
     }, [])
     const { identityCard, name, lastName, phoneNumber } = client;

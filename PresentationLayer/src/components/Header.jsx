@@ -33,7 +33,7 @@ const Header = ({ onOpen, ...rest }) => {
           fontFamily="monospace"
           fontWeight="bold"
         >
-          Logo
+          Netbanking
         </Text>
         <UserProfile />
       </Flex>

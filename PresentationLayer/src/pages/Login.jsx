@@ -13,6 +13,8 @@ import {
     Text,
     useToast
 } from '@chakra-ui/react';
+import clientService from '../services/clientService'
+
 
 const Login = () => {
     const [userCredentials, setUserCredentials] = useState({
@@ -22,6 +24,7 @@ const Login = () => {
     const navigate = useNavigate()
     const login = useUserStore(state => state.login)
     const status = useUserStore(state => state.status)
+    const setLoggedClient = useUserStore(state => state.setLoggedClient)
 
     const { username, password } = userCredentials;
     const updateState = e => {
@@ -34,9 +37,13 @@ const Login = () => {
     const handleSubmit = async e => {
         e.preventDefault()
         const user = await login(userCredentials)
-        user.role 
-            ? navigate("/admin/clients", { replace: true })
-            : navigate("/client", { replace: true });
+        if(user.role) {
+            navigate("/admin/clients", { replace: true })
+        } else {
+            const client = await clientService.getByUserId(user.id)
+            setLoggedClient(client)
+            navigate("/client/complete-info", { replace: true }) 
+        }
     }
     return (
         <Flex mt="10%" align="center" justifyContent="center">

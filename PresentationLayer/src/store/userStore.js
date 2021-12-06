@@ -7,12 +7,14 @@ import clientService from '../services/clientService'
 export const useUserStore = create(persist(
   (set, get) => (
       {
+        loggedClient: {}, 
         status: {}, 
         userToken: null,
         loginRequest : (user) => set({ status: { loggingIn: true }, user }),
         loginSuccess : (user) => set({ status: { loggedIn: true }, user }),
-        loginFailure : () => set({ status: { loggedIn: false }, user: null }),
-        logoutSuccess : () => set({ status: { loggedIn: false }, user: null }),
+        setLoggedClient : (client) => set({ loggedClient: client }),
+        loginFailure : () => set({ status: { loggedIn: false }, user: null, loggedClient: null }),
+        logoutSuccess : () => set({ status: { loggedIn: false }, user: null, loggedClient: null }),
         registerRequest : () => set({ status: { registering: true } }),
         registerSuccess : () => set({ status: {} }),
         registerFailure : () => set({ status: {} }),
@@ -27,9 +29,10 @@ export const useUserStore = create(persist(
               const loginSuccess = get().loginSuccess
               loginRequest(loginCredentials.user)
               const user = await userSevice.login(loginCredentials)
-              loginSuccess(user)
               console.log(user)
+              loginSuccess(user)
               return user
+
             } catch (error) {
               const loginFailure = get().loginFailure
               loginFailure()
@@ -54,6 +57,8 @@ export const useUserStore = create(persist(
               }
               registerSuccess(id)
             } catch (error) {
+              const registerFailure = get().registerFailure
+              registerFailure()
               console.log(error.response)
             }
           }

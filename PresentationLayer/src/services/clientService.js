@@ -11,6 +11,11 @@ clientService.getByIdentityCard = (identityCard) => {
     .then(response => response.data)
 }
 
+clientService.getByUserId = (userId) => {
+  return httpClient.get(`client/user-id/${userId}`)
+    .then(response => response.data)
+}
+
 clientService.update = (client) => {
   return httpClient.put('client', client)
     .then(response => response.data.data)

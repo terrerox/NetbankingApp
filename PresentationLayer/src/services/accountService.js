@@ -5,6 +5,11 @@ accountService.getAll = (clientId) => {
   return httpClient.get(`account/get-all/${clientId}`)
     .then(response => response.data.data)
 }
+accountService.getById = (id) => {
+  console.log(id)
+  return httpClient.get(`account/${id}`)
+    .then(response => response.data.data)
+}
 
 accountService.update = (account) => {
   return httpClient.put('account', account)

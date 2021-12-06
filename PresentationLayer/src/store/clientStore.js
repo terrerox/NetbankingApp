@@ -8,11 +8,13 @@ export const useClientStore = create(persist(
       {
         clients: [], 
         client: {}, 
+        loggedClient: {}, 
         status: {}, 
         clientRequest : () => set({ status: { isLoading: true } }),
         clientSuccess : () => set({ status: { isLoading: false } }),
         setClients : (clients) => set({ clients: clients }),
         setClient : (client) => set({ client: client }),
+        setLoggedClient : (client) => set({ loggedClient: client }),
         getClients: async () => {
             try {
               const clientRequest = get().clientRequest
@@ -23,6 +25,16 @@ export const useClientStore = create(persist(
               setClients(clients)
               clientSuccess()
               return clients
+            } catch (error) {
+                console.log(error.response)
+            }
+          },
+          getClientByUserId: async (userId) => {
+            try {
+              const setLoggedClient = get().setLoggedClient
+              setLoggedClient({})
+              const client = await clientService.getByUserId(userId)
+              setLoggedClient(client)
             } catch (error) {
                 console.log(error.response)
             }
