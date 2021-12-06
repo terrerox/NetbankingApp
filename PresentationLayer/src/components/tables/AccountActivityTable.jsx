@@ -31,9 +31,13 @@ const AccountActivityTable = () => {
                 {
                     accountActivities.map(accountActivity => (
                         <Tr key={accountActivity.id}>
-                            <Td>{accountActivity.number}</Td>
-                            <Td>{accountActivity.balance}</Td>
-                            <Td>{accountActivity.balance}</Td>
+                            <Td
+                                color={accountActivity.type ? 'green' : 'red'}
+                            >
+                                {accountActivity.type ? '+' : '-'}{accountActivity.amount}
+                            </Td>
+                            <Td>{accountActivity.type ? 'Depósito' : 'Retiro'}</Td>
+                            <Td>{accountActivity.date}</Td>
                         </Tr>
                     ))
                 }

@@ -17,45 +17,43 @@ import {
     FiClock
 } from "react-icons/fi";
 import { useNavigate } from 'react-router-dom'
-import { useUserStore, useAccountStore } from '../../store'
+import { useUserStore, useCardStore } from '../../store'
 
-const AccountsTable = () => {
-    const loggedClient = useUserStore(state => state.loggedClient)
-    const setAccount = useAccountStore(state => state.setAccount)
-    const accounts = useAccountStore(state => state.accounts)
+const CardsTable = () => {
+    const cards = useCardStore(state => state.cards)
+    const setCard = useCardStore(state => state.setCard)
     const navigate = useNavigate()
 
-
-    const goToHistory = (account) => {
-        setAccount(account)
-        navigate(account.id)
+    const goToHistory = (card) => {
+        setCard(card)
+        navigate(card.id)
     }
     return (
         <Table variant='striped' colorScheme='teal'>
             <TableCaption>
-                Esto son todas las cuentas registradas hasta el momento
+                Esto son todas las tarjetas registradas hasta el momento
             </TableCaption>
             <Thead>
                 <Tr>
                     <Th>Tipo</Th>
-                    <Th>Número</Th>
+                    <Th>Monto</Th>
                     <Th>Balance</Th>
                     <Th>Acciones</Th>
                 </Tr>
             </Thead>
             <Tbody>
                 {
-                    accounts.map(account => (
-                        <Tr key={account.id}>
-                            <Td>Ahorro</Td>
-                            <Td>{account.number}</Td>
-                            <Td>{account.balance}</Td>
+                    cards.map(card => (
+                        <Tr key={card.id}>
+                            <Td>Débito</Td>
+                            <Td>{card.amount}</Td>
+                            <Td>{card.balance}</Td>
                             <Td>
                                 <Button
                                     leftIcon={<FiClock />}
                                     colorScheme='blue'
                                     variant='solid'
-                                    onClick={() => goToHistory(account)}
+                                    onClick={() => goToHistory(card)}
                                 >
                                     Ver movimientos
                                 </Button>
@@ -67,7 +65,7 @@ const AccountsTable = () => {
             <Tfoot>
                 <Tr>
                     <Th>Tipo</Th>
-                    <Th>Número</Th>
+                    <Th>Monto</Th>
                     <Th>Balance</Th>
                     <Th>Acciones</Th>
                 </Tr>
@@ -76,4 +74,4 @@ const AccountsTable = () => {
     )
 }
 
-export default AccountsTable
+export default CardsTable

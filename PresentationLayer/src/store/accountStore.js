@@ -23,7 +23,7 @@ export const useAccountStore = create(persist(
               setAccounts(accounts)
               accountSuccess()
               console.log(accounts)
-              return user
+              return accounts
             } catch (error) {
                 console.log(error.response)
             }

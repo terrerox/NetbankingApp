@@ -16,8 +16,8 @@ const Dashboard = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const linkItems = [
     { label: "Cuentas", icon: FiTrendingUp, to: "/client/accounts" },
-    { label: "Prestamos", icon: FiColumns, to: "/admin/clients" },
-    { label: "Tarjetas", icon: FiCreditCard, to: "/admin/clients" }
+    { label: "Prestamos", icon: FiColumns, to: "/client/loans" },
+    { label: "Tarjetas", icon: FiCreditCard, to: "/client/cards" }
   ];
   return (
     <Box minH="100vh" bg="gray.50">
