@@ -66,7 +66,7 @@ const Register = () => {
     }
     return (
         <Flex mt="8%" align="center" justifyContent="center">
-            <Box p={10} maxWidth="500px" borderWidth={1} borderRadius={8} boxShadow="lg">
+            <Box p={10} bg="white" maxWidth="500px" borderWidth={1} borderRadius={8} boxShadow="lg">
                 <Box textAlign="center">
                     <Heading>Registrar</Heading>
                 </Box>
