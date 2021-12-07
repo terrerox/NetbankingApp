@@ -18,16 +18,10 @@ namespace RouterLayer.Controllers
             _accountActivityService = accountActivityService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        [HttpGet("{accountId}")]
+        public async Task<IActionResult> Get(Guid accountId)
         {
-            return Ok(await _accountActivityService.GetAllAccountActivities());
-        }
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetSingle(Guid id)
-        {
-            return Ok(await _accountActivityService.GetAccountActivityById(id));
+            return Ok(await _accountActivityService.GetAllAccountActivities(accountId));
         }
     }
 }

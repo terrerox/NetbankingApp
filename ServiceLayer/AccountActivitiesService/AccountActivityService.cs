@@ -32,10 +32,10 @@ namespace ServiceLayer.AccountActivitiesService
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<List<GetAccountActivityDto>>> GetAllAccountActivities()
+        public async Task<ServiceResponse<List<GetAccountActivityDto>>> GetAllAccountActivities(Guid accountId)
         {
             ServiceResponse<List<GetAccountActivityDto>> serviceResponse = new ServiceResponse<List<GetAccountActivityDto>>();
-            List<AccountActivity> dbAccountActivities = await _context.AccountActivities.ToListAsync();
+            List<AccountActivity> dbAccountActivities = await _context.AccountActivities.Where(c => c.AccountId == accountId).ToListAsync();
             serviceResponse.Data = dbAccountActivities.Select(c => _mapper.Map<GetAccountActivityDto>(c)).ToList();
             return serviceResponse;
         }

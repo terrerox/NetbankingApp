@@ -64,7 +64,9 @@ namespace ServiceLayer.AccountsService
         public async Task<ServiceResponse<List<GetAccountDto>>> GetAllAccounts(Guid clientId)
         {
             ServiceResponse<List<GetAccountDto>> serviceResponse = new ServiceResponse<List<GetAccountDto>>();
-            List<Account> dbAccounts = await _context.Accounts.ToListAsync();
+            List<Account> dbAccounts = await _context.Accounts
+                                        .Include(c => c.AccountActivities)
+                                        .ToListAsync();
             serviceResponse.Data = dbAccounts.Where(c => c.Status == AccountStatus.Active && c.ClientId == clientId).Select(c => _mapper.Map<GetAccountDto>(c)).ToList();
             return serviceResponse;
         }

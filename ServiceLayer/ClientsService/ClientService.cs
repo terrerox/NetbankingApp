@@ -82,6 +82,27 @@ namespace ServiceLayer.ClientsService
             return serviceResponse;
         }
 
+        public async Task<ServiceResponse<GetClientDto>> GetClientByUserId(Guid userId)
+        {
+            ServiceResponse<GetClientDto> serviceResponse = new ServiceResponse<GetClientDto>();
+            Client dbClient = 
+                await _context.Clients
+                .Include(c => c.Cards)
+                .Include(c => c.Loans)
+                .Include(c => c.Accounts)
+                .FirstOrDefaultAsync(c => c.UserId == userId && c.Status == ClientStatus.Active);
+            if(dbClient != null)
+            {
+                serviceResponse.Data = _mapper.Map<GetClientDto>(dbClient);
+            }
+            else
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = "Client not found";
+            }
+            return serviceResponse;
+        }
+
         public async Task<ServiceResponse<GetClientDto>> GetClientByIdentityCard(string identityCard)
         {
             ServiceResponse<GetClientDto> serviceResponse = new ServiceResponse<GetClientDto>();

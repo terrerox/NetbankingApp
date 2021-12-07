@@ -64,7 +64,10 @@ namespace ServiceLayer.LoansService
         public async Task<ServiceResponse<List<GetLoanDto>>> GetAllLoans(Guid clientId)
         {
             ServiceResponse<List<GetLoanDto>> serviceResponse = new ServiceResponse<List<GetLoanDto>>();
-            List<Loan> dbLoans = await _context.Loans.Where(c => c.Status == LoanStatus.Active && c.ClientId == clientId).ToListAsync();
+            List<Loan> dbLoans = await _context.Loans
+                                    .Include(c => c.Fees)
+                                    .Where(c => c.Status == LoanStatus.Active && c.ClientId == clientId)
+                                    .ToListAsync();
             serviceResponse.Data = dbLoans.Select(c => _mapper.Map<GetLoanDto>(c)).ToList();
             return serviceResponse;
         }
